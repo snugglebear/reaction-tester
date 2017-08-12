@@ -15,8 +15,10 @@
 
     <script>
         var shapeStyle = document.getElementById("shape").style;
+        var startTime, endTime;
 
-        function initRandomValues() {
+        function initShapeValues() {
+            shapeStyle.display = "none";
             shapeStyle.backgroundColor =
                 "rgb(" + genRandomValue(200) + "," +
                 genRandomValue(200) + "," +
@@ -27,41 +29,46 @@
             if (genRandomValue(2) === 0) {
                 shapeStyle.borderRadius =
                     parseInt(shapeStyle.width, 10) / 2 + "px";
-            }
-            else
+            } else
                 shapeStyle.borderRadius = "0px";
 
             var headerHeight = document.
-                getElementById("header").clientHeight;
+            getElementById("header").clientHeight;
 
             var headerWidth = document.
-                getElementById("header").clientWidth;
+            getElementById("header").clientWidth;
 
             // shapeStyle.top = headerHeight + 
             //     window.innerHeight - parseInt(shapeStyle.height,10) -
             //     headerHeight + "px";
-            
+
             // shapeStyle.left = window.innerWidth - 
             //     parseInt(shapeStyle.width,10) -1 + "px";
 
             shapeStyle.top = headerHeight + genRandomValue(
-                window.innerHeight - parseInt(shapeStyle.height,10)-
+                window.innerHeight - parseInt(shapeStyle.height, 10) -
                 headerHeight) + "px";
 
-            shapeStyle.left = genRandomValue(window.innerWidth - 
-                parseInt(shapeStyle.width,10)) - 1 + "px";
+            shapeStyle.left = genRandomValue(window.innerWidth -
+                parseInt(shapeStyle.width, 10)) - 1 + "px";
         }
 
         function genRandomValue(maxInRange) {
             return Math.floor(Math.random() * maxInRange);
         }
 
-        function show() {
-            
+        function waitRandomTime() {
+            initShapeValues();
+            var waitTime = genRandomValue(1000) + 500;
+            setTimeout(showShape, waitTime);
+        }
+
+        function showShape() {
+            shapeStyle.display = "block";
+            var startTime = Date.now();
         }
 
         document.getElementById("startButton").onclick = function () {
-            initRandomValues();
             shapeStyle.position = "absolute";
             document.getElementsByTagName("p").item(0).innerHTML =
                 "Reaction Time: ";
@@ -69,12 +76,10 @@
         }
 
         document.getElementById("shape").onclick = function () {
-            initRandomValues();
-            shapeStyle.position = "absolute";
+            var endTime = Date.now();
+            document.getElementsByTagName("p").item(0).innerHTML =
+                "Reaction Time: " + (endTime - startTime);
         }
-
-
-        shapeStyle.display = "block";
     </script>
 </body>
 
