@@ -58,27 +58,30 @@
         }
 
         function waitRandomTime() {
-            initShapeValues();
             var waitTime = genRandomValue(1000) + 500;
             setTimeout(showShape, waitTime);
         }
 
         function showShape() {
+            initShapeValues();
             shapeStyle.display = "block";
-            var startTime = Date.now();
+            startTime = Date.now();
         }
 
         document.getElementById("startButton").onclick = function () {
             shapeStyle.position = "absolute";
             document.getElementsByTagName("p").item(0).innerHTML =
                 "Reaction Time: ";
+            waitRandomTime();
+            shapeStyle.display = "block";
             this.parentElement.removeChild(this);
         }
 
         document.getElementById("shape").onclick = function () {
-            var endTime = Date.now();
+            endTime = Date.now();
             document.getElementsByTagName("p").item(0).innerHTML =
-                "Reaction Time: " + (endTime - startTime);
+                "Reaction Time: " + ((endTime - startTime)/1000) + "s";
+                waitRandomTime();
         }
     </script>
 </body>
